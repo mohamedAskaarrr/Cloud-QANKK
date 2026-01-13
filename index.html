@@ -3,559 +3,290 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cloud, Containers & K8s – Solution</title>
+<title>Cloud & K8s - Full Question Bank Solution</title>
 
 <style>
 /* ================= VARIABLES & RESET ================= */
 :root {
-  --primary: #4f46e5;       /* Indigo 600 */
-  --primary-light: #e0e7ff; /* Indigo 100 */
-  --bg-color: #f3f4f6;      /* Gray 100 */
+  --primary: #4f46e5;
+  --primary-light: #e0e7ff;
+  --bg-color: #f3f4f6;
   --card-bg: #ffffff;
-  --text-main: #1f2937;     /* Gray 800 */
-  --text-muted: #6b7280;    /* Gray 500 */
-  --border: #e5e7eb;        /* Gray 200 */
-  
-  --success-bg: #d1fae5;    /* Emerald 100 */
-  --success-border: #10b981;/* Emerald 500 */
-  --success-text: #065f46;  /* Emerald 800 */
-  
-  --error-bg: #fee2e2;      /* Red 100 */
-  --error-border: #ef4444;  /* Red 500 */
-  --error-text: #991b1b;    /* Red 800 */
-
-  --answer-bg: #f8fafc;     /* Slate 50 */
-  --answer-border: #cbd5e1; /* Slate 300 */
-  --answer-text: #334155;   /* Slate 700 */
-
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --success-bg: #d1fae5;
+  --success-border: #10b981;
+  --success-text: #065f46;
+  --error-bg: #fee2e2;
+  --error-border: #ef4444;
+  --error-text: #991b1b;
+  --answer-bg: #f8fafc;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 * { box-sizing: border-box; }
-
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-main);
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
   line-height: 1.6;
 }
 
-/* ================= LAYOUT ================= */
-.container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
+.container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
 
-/* ================= HEADER & SCORE STICKY BAR ================= */
 header {
   background: var(--card-bg);
-  padding: 20px 0;
+  padding: 30px;
   text-align: center;
-  margin-bottom: 30px;
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: var(--shadow);
+  margin-bottom: 30px;
 }
 
-h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  color: var(--primary);
-  font-weight: 800;
-  letter-spacing: -0.025em;
-}
+h1 { margin: 0; color: var(--primary); font-size: 2rem; }
 
 .sticky-score {
-  position: sticky;
-  top: 10px;
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.95);
+  position: sticky; top: 10px; z-index: 100;
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
-  padding: 15px 25px;
+  padding: 15px 30px;
   border-radius: 50px;
-  box-shadow: var(--shadow-lg);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto 30px auto;
-  max-width: 400px;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+  display: flex; justify-content: space-between; align-items: center;
+  max-width: 500px; margin: 0 auto 40px;
   border: 1px solid var(--border);
-  transition: transform 0.3s ease;
 }
 
-.score-label {
-  font-weight: 600;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.score-value {
-  font-weight: 800;
-  color: var(--primary);
-  font-size: 1.25rem;
-}
-
-/* ================= QUESTION CARDS ================= */
 .question-card {
   background: var(--card-bg);
   border-radius: 16px;
-  padding: 30px;
+  padding: 25px;
   margin-bottom: 25px;
   box-shadow: var(--shadow);
   border: 1px solid transparent;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.question-card:hover {
-  box-shadow: var(--shadow-lg);
+.question-text { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+.source-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  background: #f5f3ff;
+  color: #6366f1;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-weight: 600;
 }
 
-.question-text {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: #111827;
-}
-
-.question-number {
-  color: var(--primary);
-  margin-right: 8px;
-}
-
-/* ================= CHOICES ================= */
-.choices-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
+.choices-grid { display: flex; flex-direction: column; gap: 8px; }
 .choice {
-  padding: 14px 18px;
+  padding: 12px 18px;
   border: 2px solid var(--border);
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 1rem;
-  position: relative;
+  transition: 0.2s;
   background: #fff;
 }
 
-.choice:hover {
-  background-color: var(--primary-light);
-  border-color: var(--primary);
-  color: var(--primary);
-}
+.choice.correct { background: var(--success-bg); border-color: var(--success-border); color: var(--success-text); }
+.choice.wrong { background: var(--error-bg); border-color: var(--error-border); color: var(--error-text); }
 
-.choice.correct {
-  background-color: var(--success-bg) !important;
-  border-color: var(--success-border) !important;
-  color: var(--success-text) !important;
-  padding-left: 40px; /* Space for icon */
-}
-
-.choice.correct::before {
-  content: "✔";
-  position: absolute;
-  left: 15px;
-  font-weight: bold;
-}
-
-.choice.wrong {
-  background-color: var(--error-bg) !important;
-  border-color: var(--error-border) !important;
-  color: var(--error-text) !important;
-  opacity: 0.7;
-}
-
-/* Disable interaction after answer */
-.question-card[data-done="true"] .choice {
-  cursor: default;
-}
-.question-card[data-done="true"] .choice:hover {
-  background-color: #fff; 
-  border-color: var(--border);
-  color: var(--text-main);
-}
-.question-card[data-done="true"] .choice.correct:hover {
-  background-color: var(--success-bg);
-  border-color: var(--success-border);
-  color: var(--success-text);
-}
-.question-card[data-done="true"] .choice.wrong:hover {
-  background-color: var(--error-bg);
-  border-color: var(--error-border);
-  color: var(--error-text);
-}
-
-.feedback-msg {
-  margin-top: 15px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--primary);
-  padding: 10px;
-  background: var(--primary-light);
-  border-radius: 8px;
-  text-align: center;
-  animation: fadeIn 0.3s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ================= WRITTEN SECTION STYLES ================= */
-.section-divider {
-  margin: 60px 0 40px 0;
-  text-align: center;
-  position: relative;
-}
-
-.section-divider::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--border);
-  z-index: -1;
-}
-
-.section-divider h2 {
-  display: inline-block;
-  background: var(--bg-color);
-  padding: 0 20px;
-  color: var(--text-muted);
-  font-size: 1.5rem;
-  margin: 0;
-}
-
-/* Replaced Textarea with Answer Box */
 .answer-box {
-  background-color: var(--answer-bg);
-  border-left: 5px solid var(--primary);
-  padding: 15px 20px;
-  border-radius: 0 8px 8px 0;
-  color: var(--answer-text);
-  font-weight: 500;
-  font-size: 1rem;
-}
-
-.answer-label {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  font-weight: 700;
-}
-
-/* ================= FOOTER ================= */
-.footer {
-  text-align: center;
-  margin-top: 50px;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  padding-bottom: 40px;
+  background: var(--answer-bg);
+  border-left: 4px solid var(--primary);
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 4px;
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
-  
   <header>
-    <h1>Cloud & Kubernetes Exam Solution</h1>
+    <h1>Cloud & Kubernetes Solution Engine</h1>
+    <p style="color:var(--text-muted)">Full Question Bank with Lecture Mapping</p>
   </header>
 
   <div class="sticky-score">
-    <span class="score-label">Current Score</span>
-    <span class="score-value">
-      <span id="score">0</span> <span style="color:#cbd5e1; font-weight:300;">/</span> <span id="total">0</span>
-    </span>
+    <span style="font-weight:600">Quiz Progress</span>
+    <span style="font-weight:800; color:var(--primary)"><span id="score">0</span> / <span id="total">0</span></span>
   </div>
 
-  <div id="quiz"></div>
+  <div id="quiz-container"></div>
 
-  <div class="section-divider">
-    <h2>Solved Written Questions</h2>
-  </div>
-
-  <div id="written"></div>
-
-  <div class="footer">
-    End of Solution
-  </div>
-
+  <h2 style="text-align:center; margin-top:60px; color:var(--text-muted)">Written Conceptual Analysis</h2>
+  <div id="written-container"></div>
 </div>
 
 <script>
-/* ================= FULL MCQ BANK ================= */
-
-const questions = [
-{q:"What is the core difference between VMs and containers?",o:["Containers virtualize hardware; VMs virtualize OS","VMs virtualize hardware; containers virtualize OS-level resources","Containers require more resources than VMs","VMs start faster than containers"],a:1},
-{q:"Which kernel feature isolates what a container can “see” (e.g., PIDs, routes, IPs)?",o:["Cgroups","Namespaces","OverlayFS","Hypervisors"],a:1},
-{q:"Cgroups are responsible for which of the following?",o:["Isolating network interfaces","Controlling resource usage (CPU, memory, I/O)","Creating container images","Scheduling Pods"],a:1},
-{q:"Containers are lightweight mainly because they share:",o:["Kernel and system libraries","Full OS instances","Hardware virtualization layer","Hypervisor"],a:0},
-{q:"What does the PID namespace isolate?",o:["Processes within a container","Network interfaces","Filesystem","Memory limits"],a:0},
-{q:"Containers run as:",o:["Full VMs","Standard processes on the host OS","Hypervisor processes","Detached kernels"],a:1},
-{q:"Which feature provides filesystem isolation?",o:["Cgroups","Namespaces","OverlayFS","Scheduler"],a:2},
-{q:"Which of the following does not isolate containers?",o:["Namespaces","Cgroups","Docker daemon","Hypervisor"],a:2},
-{q:"Containers differ from VMs because they:",o:["Emulate full hardware","Share host OS kernel","Take longer to start","Require a separate OS"],a:1},
-{q:"Why do containers start faster than VMs?",o:["They emulate hardware","They use shared host OS kernel","They require booting a separate kernel","They rely on full OS installation"],a:1},
-
-{q:"What does the UTS namespace isolate?",o:["Hostname and domain name","CPU resources","Filesystem","Network routes"],a:0},
-{q:"In Linux containers, which mechanism controls resource limits?",o:["Namespaces","Cgroups","Dockerfile","OverlayFS"],a:1},
-{q:"Which layer of OverlayFS do containers write to?",o:["Lower layer","Upper/writable layer","Base image layer","Shared library layer"],a:1},
-{q:"Container images primarily use:",o:["Writable layers","Read-only layers","Hypervisor images","Kernel snapshots"],a:1},
-{q:"Docker Hub is mainly used for:",o:["Running containers","Storing and sharing images","Controlling resources","Scheduling Pods"],a:1},
-{q:"Which statement describes Docker images?",o:["Fully isolated VMs","Stack of read-only layers","Hardware emulation","Single executable file"],a:1},
-
-{q:"Which Docker network driver provides the highest isolation?",o:["Bridge","Host","None","Overlay"],a:2},
-{q:"What mechanism connects container interfaces to Docker’s bridge?",o:["veth pair","Namespaces","Cgroups","OverlayFS"],a:0},
-{q:"Docker DNS resolves container names only on which network?",o:["Default bridge","Host network","User-defined bridge","None network"],a:2},
-{q:"Docker images consist of:",o:["Single layer","Multiple stacked layers","Writable base only","Kernel snapshots"],a:1},
-{q:"A container using the “none” network driver receives:",o:["Full network access","No network","NAT-ed bridge network","Host IP"],a:1},
-
-{q:"The writable layer of a container is called:",o:["Upper layer","Lower layer","Base image","Snapshot"],a:0},
-{q:"The veth pair exists to:",o:["Share filesystem","Connect container network interface to bridge","Limit CPU","Mount images"],a:1},
-{q:"OverlayFS benefits images by enabling:",o:["Writable layers only","Copy-on-write and sharing base layers","Direct kernel access","Network isolation"],a:1},
-
-{q:"Which component runs containers on Kubernetes nodes?",o:["kubelet","API server","Scheduler","Controller-manager"],a:0},
-{q:"What does etcd store?",o:["Cluster state and configuration","Container images","Network routing","Node logs"],a:0},
-{q:"The scheduler decides placement based on:",o:["Resource availability and constraints","Image size","Pod readiness","Network latency"],a:0},
-{q:"Which component applies the desired state?",o:["Controller-manager","kubelet","Scheduler","etcd"],a:0},
-{q:"The API server functions as:",o:["Gateway for client requests","Scheduler","Node controller","Volume provisioner"],a:0},
-{q:"Worker nodes typically run:",o:["kubelet and container runtime","API server","Scheduler","etcd"],a:0},
-
-{q:"The control plane enforces:",o:["Desired cluster state","Node storage","Pod networking only","Image registry"],a:0},
-{q:"Horizontal Pod Autoscaler (HPA) scales based on:",o:["Metrics like CPU or memory usage","Number of nodes","ReplicaSet size","Pod logs"],a:0},
-{q:"Vertical Pod Autoscaler (VPA) adjusts:",o:["Resource requests and limits","Node size","Pod count","Storage volume"],a:0},
-{q:"Which component detects unreachable nodes?",o:["Node controller","Scheduler","kubelet","API server"],a:0},
-
-{q:"What does a Pod represent in Kubernetes?",o:["Single container","Group of containers scheduled together","Node","Deployment"],a:1},
-{q:"Containers in a Pod share:",o:["Network namespace and storage","CPU resources only","Host kernel","Hypervisor layer"],a:0},
-{q:"Why do containers inside a Pod communicate via localhost?",o:["They share network namespace","They share PID namespace only","Kubernetes NATs the traffic","They share separate IPs"],a:0},
-{q:"Which Service type assigns a virtual internal IP?",o:["ClusterIP","NodePort","LoadBalancer","ExternalName"],a:0},
-{q:"ReplicaSets ensure:",o:["Desired number of Pod replicas are running","Node availability","Persistent storage","Network isolation"],a:0},
-
-{q:"Type-1 hypervisors run:",o:["Directly on hardware","On top of host OS","Inside a container","Only Linux OS"],a:0},
-{q:"VMs emulate:",o:["Full hardware","Kernel only","Processes","Network namespace"],a:0},
-{q:"Containers provide isolation through:",o:["Namespaces and Cgroups","Hypervisor","Full OS","VMs"],a:0},
-{q:"Which component is required for VMs but not containers?",o:["Hypervisor","Cgroups","Namespace","Docker Engine"],a:0},
-
-/* ===== STARTING FROM HERE, RANDOMIZED ANSWERS ===== */
-
-{q:"ReplicaSets ensure:",o:["Desired number of Pod replicas are running","Node availability","Persistent storage","Network isolation"],a:0},
-{q:"A Pod with two containers shares:",o:["Network namespace","Filesystem only","Host kernel only","CPU limits only"],a:0},
-{q:"The purpose of sidecar containers is:",o:["Extend Pod functionality","Main application","Kubernetes control","Node monitoring only"],a:0},
-{q:"Pods communicate without NAT because Kubernetes assumes:",o:["Flat network","Pod-specific NAT","Host network only","OverlayFS routing"],a:0},
-{q:"A Pod is the smallest:",o:["Deployable unit in Kubernetes","Node","ReplicaSet","Cluster component"],a:0},
-
-{q:"VMs differ from containers primarily because:",o:["VMs virtualize OS","VMs virtualize hardware","Containers emulate hardware","Containers are slower to start"],a:1},
-{q:"Which component is required for VMs but not containers?",o:["Hypervisor","Cgroups","Namespace","Docker Engine"],a:0},
-{q:"Type-1 hypervisors run:",o:["Directly on hardware","On top of host OS","Inside a container","Only Linux OS"],a:0},
-{q:"Containers start faster than VMs because they:",o:["Require less I/O","Share host OS kernel","Use virtualization","Boot a separate kernel"],a:1},
-
-{q:"Hypervisors mainly manage:",o:["CPU, memory, and storage virtualization","Network namespace","OverlayFS layers","Pod lifecycle"],a:0},
-{q:"Containers share:",o:["Host OS kernel","Hypervisor","CPU only","Node IP only"],a:0},
-{q:"Which namespace ensures process isolation?",o:["PID","NET","MNT","UTS"],a:0},
-{q:"Cgroups provide:",o:["Resource limits","Filesystem isolation","Process isolation","Pod scheduling"],a:0},
-{q:"VMs emulate:",o:["Full hardware","Kernel only","Processes","Network namespace"],a:0},
-
-{q:"Containers provide isolation through:",o:["Namespaces and Cgroups","Hypervisor","Full OS","VMs"],a:0},
-{q:"Which best describes a VM?",o:["Full hardware emulation","Containerized process","Namespace-only isolation","Sidecar container"],a:0},
-{q:"Hypervisor overhead exists because:",o:["It emulates hardware","Containers share kernel","Namespaces limit CPU","OverlayFS duplicates data"],a:0},
-
-{q:"Docker default bridge provides:",o:["NAT-ed network for containers","Host network","Overlay networking","None"],a:0},
-{q:"Kubernetes flat network model ensures:",o:["All Pods can communicate without NAT","NodePort only","ClusterIP only","Separate subnet per Pod"],a:0},
-{q:"kube-proxy rewrites packets to support:",o:["Service load balancing","DNS resolution","OverlayFS mounting","Sidecar container initialization"],a:0},
-{q:"VXLAN is used for:",o:["Overlay networking across nodes","Process isolation","Resource limits","Volume mounts"],a:0},
-
-{q:"In Docker, NAT occurs when:",o:["Containers use default bridge","Containers use host network","Containers use none","Pods share network namespace"],a:0},
-{q:"Container veth interfaces connect:",o:["Containers to bridges","CPU to memory","Namespaces","Hypervisor to kernel"],a:0},
-{q:"Kubernetes Services use which mechanism?",o:["kube-proxy","OverlayFS","Dockerfile","Cgroups"],a:0},
-{q:"ClusterIP provides:",o:["Internal virtual IP","External IP","NodePort","LoadBalancer"],a:0},
-{q:"NodePort exposes:",o:["Service on host port","Cluster-internal IP","Overlay network","Pod IP only"],a:0},
-
-{q:"Pod-to-Pod traffic across nodes uses:",o:["Overlay network or CNI plugin","Host network only","NAT","Sidecar container"],a:0},
-{q:"Docker’s default DNS works only on:",o:["Default bridge network","Host network","Overlay network","None network"],a:0},
-{q:"Kubernetes networking is fundamentally:",o:["Flat, NAT-less","NAT per Pod","Host-only","VM-based"],a:0},
-
-{q:"Deployments manage:",o:["ReplicaSets and Pods","Nodes only","Network policies","Volumes only"],a:0},
-{q:"ReplicaSets maintain:",o:["Desired number of Pods","Node availability","Persistent volumes","Overlay networks"],a:0},
-{q:"Node Autoscaler triggers when:",o:["Resource demand exceeds cluster capacity","Pod fails","Deployment scales","ClusterIP service is unavailable"],a:0},
-
-{q:"ClusterIP Services provide:",o:["Internal access only","External access only","NodePort","LoadBalancer"],a:0},
-{q:"HPA depends on:",o:["Metrics (CPU/memory)","ReplicaSet size","Node availability","Pod labels"],a:0},
-{q:"Ingress works at which layer?",o:["L7 (HTTP/HTTPS)","L4 (TCP/UDP)","L3 (IP routing)","L2 (Ethernet)"],a:0},
-
-{q:"Which Kubernetes object is declarative?",o:["Deployment","Pod only","Node","ServiceAccount"],a:0},
-{q:"Which component handles rollout/rollback?",o:["Deployment controller","Scheduler","kubelet","etcd"],a:0},
-{q:"Which resource ensures Pods run on all nodes?",o:["DaemonSet","Deployment","ReplicaSet","StatefulSet"],a:0},
-
-{q:"Which object models a running application?",o:["Deployment","Pod","ReplicaSet","Service"],a:0},
-{q:"A Deployment with 3 replicas ensures:",o:["3 Pods running","3 nodes active","3 containers per Pod","3 volumes mounted"],a:0},
-{q:"Autoscaling decisions depend on:",o:["Metrics and thresholds","Node IP","Pod PID namespace","OverlayFS layers"],a:0},
-
-{q:"Which Kubernetes feature allows multiple containers to share the same lifecycle?",o:["Pod","Deployment","ReplicaSet","Node"],a:0},
-
-{q:"Which Docker storage driver uses copy-on-write for layers?",o:["OverlayFS","AUFS","Device Mapper","Btrfs"],a:0},
-{q:"In Kubernetes, a StatefulSet is used for:",o:["Stateful applications","Stateless applications","Horizontal scaling only","Node management"],a:0},
-{q:"Which type of Kubernetes Service exposes an application externally via cloud provider load balancer?",o:["LoadBalancer","ClusterIP","NodePort","ExternalName"],a:0},
-
-{q:"What does the kube-scheduler primarily consider when scheduling Pods?",o:["Node resources, affinity/anti-affinity, taints/tolerations","Network latency","OverlayFS layers","Image size"],a:0},
-{q:"In Docker, which command builds an image from a Dockerfile?",o:["docker build","docker run","docker commit","docker push"],a:0},
-
-{q:"Which Kubernetes object is declarative and manages ReplicaSets?",o:["Deployment","Pod","StatefulSet","Service"],a:0},
-{q:"Kubernetes PersistentVolume (PV) is:",o:["Storage resource in the cluster","Compute resource","Network namespace","Container image"],a:0},
-{q:"Horizontal Pod Autoscaler (HPA) scales Pods based on:",o:["CPU/memory metrics","Number of nodes","Pod names","OverlayFS usage"],a:0},
-
-{q:"Which namespace isolates hostname and domain name in Linux containers?",o:["UTS","PID","NET","MNT"],a:0},
-{q:"Kubernetes ConfigMap is used for:",o:["Storing configuration data","Storing secrets only","Scheduling Pods","Resource limits"],a:0},
-{q:"Which CNI plugin type is commonly used for overlay networking in Kubernetes?",o:["Flannel","OverlayFS","veth","kube-proxy"],a:0},
-
-{q:"A sidecar container is typically used to:",o:["Extend main container functionality","Replace the main container","Control the host kernel","Emulate hardware"],a:0},
-{q:"What command lists all running Docker containers?",o:["docker ps","docker images","docker run","docker network ls"],a:0},
-
-{q:"Kubernetes DaemonSet ensures:",o:["A Pod runs on all nodes","Deployment scaling","Persistent storage mounting","Overlay network creation"],a:0},
-{q:"The pause container in a Pod:",o:["Holds network namespace","Runs main application","Manages resource limits","Updates Kubernetes API"],a:0},
-
-{q:"Docker Hub is primarily used to:",o:["Store and share images","Run containers","Apply resource limits","Manage Kubernetes clusters"],a:0},
-{q:"In OverlayFS, the upper layer is:",o:["Writable","Read-only","Base image","Kernel layer"],a:0},
-
-{q:"Which Kubernetes object defines desired state and allows declarative updates?",o:["Deployment","Pod","Node","ServiceAccount"],a:0},
-{q:"Vertical Pod Autoscaler (VPA) adjusts:",o:["Resource requests and limits","Pod count","Node IPs","Overlay network bridges"],a:0},
-
-{q:"Docker veth pair is used to:",o:["Connect container interface to bridge","Limit CPU","Mount volumes","Share PID namespace"],a:0},
-{q:"Kubernetes ClusterIP Service provides:",o:["Internal virtual IP only","External load balancer","NodePort","StatefulSet IP"],a:0},
-
-{q:"NodePort Service exposes:",o:["Service on a node port","Internal cluster IP only","Overlay network IP","None"],a:0},
-{q:"Which Kubernetes object is used for rolling updates?",o:["Deployment","Pod","StatefulSet","ConfigMap"],a:0},
-
-{q:"The Kubernetes control plane component that enforces desired state:",o:["Controller-manager","kubelet","Scheduler","etcd"],a:0},
-{q:"ReplicaSet ensures:",o:["Desired number of Pods","Node scaling","Overlay networking","Persistent storage"],a:0},
-
-{q:"In Docker, the COPY instruction in a Dockerfile:",o:["Copies files into image","Copies container runtime","Mounts volumes","Creates a network namespace"],a:0},
-{q:"Kubernetes StatefulSet differs from Deployment because:",o:["Stable network ID and persistent storage","Stateless","Only for single node","Uses Docker Hub only"],a:0}
+/* ================= COMPLETE MCQ DATA ================= */
+const mcqs = [
+  {q:"What is the core difference between VMs and containers?", o:["Containers virtualize hardware; VMs virtualize OS","VMs virtualize hardware; containers virtualize OS-level resources","Containers require more resources than VMs","VMs start faster than containers"], a:1, src:"Lec 4 - Slide 8"},
+  {q:"Which kernel feature isolates what a container can “see” (e.g., PIDs, routes, IPs)?", o:["Cgroups","Namespaces","OverlayFS","Hypervisors"], a:1, src:"Lec 4 - Slide 17, 24"},
+  {q:"Cgroups are responsible for which of the following?", o:["Isolating network interfaces","Controlling resource usage (CPU, memory, I/O)","Creating container images","Scheduling Pods"], a:1, src:"Lec 4 - Slide 19"},
+  {q:"Containers are lightweight mainly because they share:", o:["Kernel and system libraries","Full OS instances","Hardware virtualization layer","Hypervisor"], a:0, src:"Lec 4 - Slide 14"},
+  {q:"What does the PID namespace isolate?", o:["Processes within a container","Network interfaces","Filesystem","Memory limits"], a:0, src:"Lec 4 - Slide 23"},
+  {q:"Containers run as:", o:["Full VMs","Standard processes on the host OS","Hypervisor processes","Detached kernels"], a:1, src:"Lec 4 - Slide 15"},
+  {q:"Which feature provides filesystem isolation?", o:["Cgroups","Namespaces","OverlayFS","Scheduler"], a:2, src:"Lec 4 - Slide 26, 29"},
+  {q:"Which of the following does not isolate containers?", o:["Namespaces","Cgroups","Docker daemon","Hypervisor"], a:2, src:"Lec 4 - Slide 17"},
+  {q:"Containers differ from VMs because they:", o:["Emulate full hardware","Share host OS kernel","Take longer to start","Require a separate OS"], a:1, src:"Lec 4 - Slide 8"},
+  {q:"Why do containers start faster than VMs?", o:["They emulate hardware","They use shared host OS kernel","They require booting a separate kernel","They rely on full OS installation"], a:1, src:"Lec 4 - Slide 5"},
+  {q:"What does the UTS namespace isolate?", o:["Hostname and domain name","CPU resources","Filesystem","Network routes"], a:0, src:"Lec 4 - Slide 24"},
+  {q:"In Linux containers, which mechanism controls resource limits?", o:["Namespaces","Cgroups","Dockerfile","OverlayFS"], a:1, src:"Lec 4 - Slide 19"},
+  {q:"Which layer of OverlayFS do containers write to?", o:["Lower layer","Upper/writable layer","Base image layer","Shared library layer"], a:1, src:"Lec 4 - Slide 32"},
+  {q:"Container images primarily use:", o:["Writable layers","Read-only layers","Hypervisor images","Kernel snapshots"], a:1, src:"Lec 4 - Slide 29"},
+  {q:"Docker Hub is mainly used for:", o:["Running containers","Storing and sharing images","Controlling resources","Scheduling Pods"], a:1, src:"Lec 4 - Slide 31"},
+  {q:"Which statement describes Docker images?", o:["Fully isolated VMs","Stack of read-only layers","Hardware emulation","Single executable file"], a:1, src:"Lec 4 - Slide 29"},
+  {q:"Which Docker network driver provides the highest isolation?", o:["Bridge","Host","None","Overlay"], a:2, src:"Net PDF - Page 29"},
+  {q:"What mechanism connects container interfaces to Docker's bridge?", o:["veth pair","Namespaces","Cgroups","Overlay FS"], a:0, src:"Net PDF - Page 11"},
+  {q:"Docker DNS resolves container names only on which network?", o:["Default bridge","Host network","User-defined bridge","None network"], a:2, src:"Net PDF - Page 22"},
+  {q:"Docker images consist of:", o:["Single layer","Multiple stacked layers","Writable base only","Kernel snapshots"], a:1, src:"Lec 4 - Slide 26"},
+  {q:"A container using the 'none' network driver receives:", o:["Full network access","No network","NAT-ed bridge network","Host IP"], a:1, src:"Net PPT - Slide 41"},
+  {q:"The writable layer of a container is called:", o:["Upper layer","Lower layer","Base image","Snapshot"], a:0, src:"Lec 4 - Slide 32"},
+  {q:"The veth pair exists to:", o:["Share filesystem","Connect container network interface to bridge","Limit CPU","Mount images"], a:1, src:"Net PPT - Slide 11"},
+  {q:"OverlayFS benefits images by enabling:", o:["Writable layers only","Copy-on-write and sharing base layers","Direct kernel access","Network isolation"], a:1, src:"Lec 4 - Slide 29"},
+  {q:"Which component runs containers on Kubernetes nodes?", o:["kubelet","API server","Scheduler","Controller-manager"], a:0, src:"Net PPT - Slide 5"},
+  {q:"What does etcd store?", o:["Cluster state and configuration","Container images","Network routing","Node logs"], a:0, src:"K8s Arch Docs"},
+  {q:"The scheduler decides placement based on:", o:["Resource availability and constraints","Image size","Pod readiness","Network latency"], a:0, src:"Net PPT - Slide 5"},
+  {q:"Which component applies the desired state?", o:["Controller-manager","kubelet","Scheduler","etcd"], a:0, src:"Net PPT - Slide 5"},
+  {q:"The API server functions as:", o:["Gateway for client requests","Scheduler","Node controller","Volume provisioner"], a:0, src:"Net PPT - Slide 5, 6"},
+  {q:"Worker nodes typically run:", o:["kubelet and container runtime","API server","Scheduler","etcd"], a:0, src:"Net PPT - Slide 5"},
+  {q:"The control plane enforces:", o:["Desired cluster state","Node storage","Pod networking only","Image registry"], a:0, src:"Net PPT - Slide 5"},
+  {q:"Horizontal Pod Autoscaler (HPA) scales based on:", o:["Metrics like CPU or memory usage","Number of nodes","ReplicaSet size","Pod logs"], a:0, src:"Lec 4 - Slide 18"},
+  {q:"Vertical Pod Autoscaler (VPA) adjusts:", o:["Resource requests and limits","Node size","Pod count","Storage volume"], a:0, src:"Lec 4 - Slide 18"},
+  {q:"Which component detects unreachable nodes?", o:["Node controller","Scheduler","kubelet","API server"], a:0, src:"K8s Control Plane"},
+  {q:"The node controller responds when:", o:["Node is down or unhealthy","Pod fails","Deployment scales","Config Map updates"], a:0, src:"Net PPT - Slide 5"},
+  {q:"Which Kubernetes object holds cluster-wide configuration?", o:["ConfigMap","Secret","Deployment","Service"], a:0, src:"K8s Config Management"},
+  {q:"What does a Pod represent in Kubernetes?", o:["Single container","Group of containers scheduled together","Node","Deployment"], a:1, src:"Net PPT - Slide 134"},
+  {q:"Containers in a Pod share:", o:["Network namespace and storage","CPU resources only","Host kernel","Hypervisor layer"], a:0, src:"Net PPT - Slide 134"},
+  {q:"The pause container is used to:", o:["Initialize Pod networking","Run application logic","Mount volumes only","Provide persistent storage"], a:0, src:"K8s Internals"},
+  {q:"Why do containers inside a Pod communicate via localhost?", o:["They share network namespace","They share PID namespace only","Kubernetes NATs the traffic","They share separate IPs"], a:0, src:"Net PPT - Slide 135"},
+  {q:"Pod networking in Kubernetes is based on:", o:["Flat network model","NAT per Pod","Host-only networking","OverlayFS only"], a:0, src:"Net PPT - Slide 145"},
+  {q:"Which Service type assigns a virtual internal IP?", o:["ClusterIP","NodePort","Load Balancer","ExternalName"], a:0, src:"Net PPT - Slide 150"},
+  {q:"Pods are ephemeral because:", o:["They can be terminated and recreated","They use persistent storage","They are VMs","They are always long-running"], a:0, src:"K8s Concepts"},
+  {q:"ReplicaSets ensure:", o:["Desired number of Pod replicas are running","Node availability","Persistent storage","Network isolation"], a:0, src:"Net PPT - Slide 117"},
+  {q:"A Pod with two containers shares:", o:["Network namespace","Filesystem only","Host kernel only","CPU limits only"], a:0, src:"Net PPT - Slide 134"},
+  {q:"The purpose of sidecar containers is:", o:["Extend Pod functionality","Main application","Kubernetes control","Node monitoring only"], a:0, src:"Net PPT - Slide 136"},
+  {q:"Pods communicate without NAT because Kubernetes assumes:", o:["Flat network","Pod-specific NAT","Host network only","OverlayFS routing"], a:0, src:"Net PPT - Slide 145"},
+  {q:"A Pod is the smallest:", o:["Deployable unit in Kubernetes","Node","ReplicaSet","Cluster component"], a:0, src:"Net PPT - Slide 132"},
+  {q:"VMs differ from containers primarily because:", o:["VMs virtualize OS","VMs virtualize hardware","Containers emulate hardware","Containers are slower to start"], a:1, src:"Lec 4 - Slide 8"},
+  {q:"Which component is required for VMs but not containers?", o:["Hypervisor","Cgroups","Namespace","Docker Engine"], a:0, src:"Lec 4 - Slide 8"},
+  {q:"Type-1 hypervisors run:", o:["Directly on hardware","On top of host OS","Inside a container","Only Linux OS"], a:0, src:"Lecture 2 - Slide 10"},
+  {q:"Containers start faster than VMs because they:", o:["Require less I/O","Share host OS kernel","Use virtualization","Boot a separate kernel"], a:1, src:"Lec 4 - Slide 5"},
+  {q:"Hypervisors mainly manage:", o:["CPU, memory, and storage virtualization","Network namespace","Overlay FS layers","Pod lifecycle"], a:0, src:"Lecture 2 - Slide 5"},
+  {q:"Containers share:", o:["Host OS kernel","Hypervisor","CPU only","Node IP only"], a:0, src:"Lec 4 - Slide 14"},
+  {q:"Which namespace ensures process isolation?", o:["PID","NET","MNT","UTS"], a:0, src:"Lec 4 - Slide 23"},
+  {q:"Cgroups provide:", o:["Resource limits","Filesystem isolation","Process isolation","Pod scheduling"], a:0, src:"Lec 4 - Slide 19"},
+  {q:"VMs emulate:", o:["Full hardware","Kernel only","Processes","Network namespace"], a:0, src:"Lecture 2 - Slide 5"},
+  {q:"Containers provide isolation through:", o:["Namespaces and Cgroups","Hypervisor","Full OS","VMs"], a:0, src:"Lec 4 - Slide 17"},
+  {q:"Which best describes a VM?", o:["Full hardware emulation","Containerized process","Namespace-only isolation","Sidecar container"], a:0, src:"Lecture 2 - Slide 5"},
+  {q:"Hypervisor overhead exists because:", o:["It emulates hardware","Containers share kernel","Namespaces limit CPU","OverlayFS duplicates data"], a:0, src:"Lec 4 - Slide 5"},
+  {q:"Docker default bridge provides:", o:["NAT-ed network for containers","Host network","Overlay networking","None"], a:0, src:"Net PDF - Page 18"},
+  {q:"Kubernetes flat network model ensures:", o:["All Pods can communicate without NAT","NodePort only","ClusterIP only","Separate subnet per Pod"], a:0, src:"Net PPT - Slide 145"},
+  {q:"kube-proxy rewrites packets to support:", o:["Service load balancing","DNS resolution","OverlayFS mounting","Sidecar container initialization"], a:0, src:"Net PPT - Slide 153"},
+  {q:"VXLAN is used for:", o:["Overlay networking across nodes","Process isolation","Resource limits","Volume mounts"], a:0, src:"Net PPT - Slide 26"},
+  {q:"In Docker, NAT occurs when:", o:["Containers use default bridge","Containers use host network","Containers use none","Pods share network namespace"], a:0, src:"Net PDF - Page 18"},
+  {q:"Container veth interfaces connect:", o:["Containers to bridges","CPU to memory","Namespaces","Hypervisor to kernel"], a:0, src:"Net PPT - Slide 11"},
+  {q:"Kubernetes Services use which mechanism?", o:["kube-proxy","OverlayFS","Dockerfile","Cgroups"], a:0, src:"Net PPT - Slide 6"},
+  {q:"ClusterIP provides:", o:["Internal virtual IP","External IP","NodePort","Load Balancer"], a:0, src:"Net PPT - Slide 150"},
+  {q:"NodePort exposes:", o:["Service on host port","Cluster-internal IP","Overlay network","Pod IP only"], a:0, src:"Net PPT - Slide 150"},
+  {q:"Pod-to-Pod traffic across nodes uses:", o:["Overlay network or CNI plugin","Host network only","NAT","Sidecar container"], a:0, src:"Net PPT - Slide 145"},
+  {q:"Docker's default DNS works only on:", o:["Default bridge network","Host network","Overlay network","None network"], a:2, src:"Net PPT - Slide 22"},
+  {q:"Kubernetes networking is fundamentally:", o:["Flat, NAT-less","NAT per Pod","Host-only","VM-based"], a:0, src:"Net PPT - Slide 145"},
+  {q:"Deployments manage:", o:["ReplicaSets and Pods","Nodes only","Network policies","Volumes only"], a:0, src:"Net PPT - Slide 117"},
+  {q:"ReplicaSets maintain:", o:["Desired number of Pods","Node availability","Persistent volumes","Overlay networks"], a:0, src:"Net PPT - Slide 117"},
+  {q:"Node Autoscaler triggers when:", o:["Resource demand exceeds cluster capacity","Pod fails","Deployment scales","ClusterIP service is unavailable"], a:0, src:"K8s Scaling"},
+  {q:"ClusterIP Services provide:", o:["Internal access only","External access only","NodePort","Load Balancer"], a:0, src:"Net PPT - Slide 150"},
+  {q:"HPA depends on:", o:["Metrics (CPU/memory)","ReplicaSet size","Node availability","Pod labels"], a:0, src:"Lec 4 - Slide 18"},
+  {q:"Ingress works at which layer?", o:["L7 (HTTP/HTTPS)","L4 (TCP/UDP)","L3 (IP routing)","L2 (Ethernet)"], a:0, src:"K8s Services"},
+  {q:"Which Kubernetes object is declarative?", o:["Deployment","Pod only","Node","Service Account"], a:0, src:"Net PPT - Slide 117"},
+  {q:"Which component handles rollout/ rollback?", o:["Deployment controller","Scheduler","kubelet","etcd"], a:0, src:"K8s Deployment Docs"},
+  {q:"Which resource ensures Pods run on all nodes?", o:["DaemonSet","Deployment","ReplicaSet","StatefulSet"], a:0, src:"K8s Workloads"},
+  {q:"Which object models a running application?", o:["Deployment","Pod","ReplicaSet","Service"], a:1, src:"Net PPT - Slide 132"},
+  {q:"A Deployment with 3 replicas ensures:", o:["3 Pods running","3 nodes active","3 Containers per Pod","3 volumes mounted"], a:0, src:"Net PPT - Slide 117"},
+  {q:"Autoscaling decisions depend on:", o:["Metrics and thresholds","Node IP","Pod PID namespace","OverlayFS layers"], a:0, src:"Lec 4 - Slide 18"},
+  {q:"Which Kubernetes feature allows multiple containers to share the same lifecycle?", o:["Pod","Deployment","ReplicaSet","Node"], a:0, src:"Net PPT - Slide 132"},
+  {q:"Which Docker storage driver uses copy-on-write for layers?", o:["OverlayFS","AUFS","Device Mapper","Btrfs"], a:0, src:"Lec 4 - Slide 29"},
+  {q:"In Kubernetes, a StatefulSet is used for:", o:["Stateful applications","Stateless applications","Horizontal scaling only","Node management"], a:0, src:"K8s Workloads"},
+  {q:"Which type of Kubernetes Service exposes an application externally via cloud provider load balancer?", o:["Load Balancer","ClusterIP","NodePort","ExternalName"], a:0, src:"Net PPT - Slide 150"},
+  {q:"What does the kube-scheduler primarily consider when scheduling Pods?", o:["Node resources, affinity/anti-affinity, taints/tolerations","Network latency","OverlayFS layers","Image size"], a:0, src:"Net PPT - Slide 5"},
+  {q:"In Docker, which command builds an image from a Dockerfile?", o:["docker build","docker run","docker commit","docker push"], a:0, src:"Lec 4 - Slide 34"},
+  {q:"Which Kubernetes object is declarative and manages ReplicaSets?", o:["Deployment","Pod","StatefulSet","Service"], a:0, src:"Net PPT - Slide 117"},
+  {q:"Kubernetes PersistentVolume (PV) is:", o:["Storage resource in the cluster","Compute resource","Network namespace","Container image"], a:0, src:"K8s Storage"},
+  {q:"Horizontal Pod Autoscaler (HPA) scales Pods based on:", o:["CPU/memory metrics","Number of nodes","Pod names","OverlayFS usage"], a:0, src:"Lec 4 - Slide 18"},
+  {q:"Which namespace isolates hostname and domain name in Linux containers?", o:["UTS","PID","NET","MNT"], a:0, src:"Lec 4 - Slide 24"},
+  {q:"Kubernetes ConfigMap is used for:", o:["Storing configuration data","Storing secrets only","Scheduling Pods","Resource limits"], a:0, src:"K8s Config"},
+  {q:"Which CNI plugin type is commonly used for overlay networking in Kubernetes?", o:["Flannel","OverlayFS","veth","kube-proxy"], a:0, src:"Net PPT - Slide 163"},
+  {q:"A sidecar container is typically used to:", o:["Extend main container functionality","Replace the main container","Control the host kernel","Emulate hardware"], a:0, src:"Net PPT - Slide 136"},
+  {q:"What command lists all running Docker containers?", o:["docker ps","docker images","docker run","docker network Is"], a:0, src:"Lec 4 - Slide 35"},
+  {q:"Kubernetes DaemonSet ensures:", o:["A Pod runs on all nodes","Deployment scaling","Persistent storage mounting","Overlay network creation"], a:0, src:"K8s Workloads"},
+  {q:"The pause container in a Pod:", o:["Holds network namespace","Runs main application","Manages resource limits","Updates Kubernetes API"], a:0, src:"K8s Pod Arch"},
+  {q:"Docker Hub is primarily used to:", o:["Store and share images","Run containers","Apply resource limits","Manage Kubernetes clusters"], a:0, src:"Lec 4 - Slide 31"},
+  {q:"In OverlayFS, the upper layer is:", o:["Writable","Read-only","Base image","Kernel layer"], a:0, src:"Lec 4 - Slide 32"},
+  {q:"Which Kubernetes object defines desired state and allows declarative updates?", o:["Deployment","Pod","Node","Service Account"], a:0, src:"Net PPT - Slide 117"},
+  {q:"Vertical Pod Autoscaler (VPA) adjusts:", o:["Resource requests and limits","Pod count","Node IPs","Overlay network bridges"], a:0, src:"Lec 4 - Slide 18"},
+  {q:"Docker veth pair is used to:", o:["Connect container interface to bridge","Limit CPU","Mount volumes","Share PID namespace"], a:0, src:"Net PPT - Slide 11"},
+  {q:"Kubernetes ClusterIP Service provides:", o:["Internal virtual IP only","External load balancer","NodePort","StatefulSet IP"], a:0, src:"Net PPT - Slide 150"},
+  {q:"NodePort Service exposes:", o:["Service on a node port","Internal cluster IP only","Overlay network IP","None"], a:0, src:"Net PPT - Slide 150"},
+  {q:"Which Kubernetes object is used for rolling updates?", o:["Deployment","Pod","StatefulSet","ConfigMap"], a:0, src:"Net PPT - Slide 117"},
+  {q:"The Kubernetes control plane component that enforces desired state:", o:["Controller-manager","kubelet","Scheduler","etcd"], a:0, src:"Net PPT - Slide 5"},
+  {q:"ReplicaSet ensures:", o:["Desired number of Pods","Node scaling","Overlay networking","Persistent storage"], a:0, src:"Net PPT - Slide 117"},
+  {q:"In Docker, the COPY instruction in a Dockerfile:", o:["Copies files into image","Copies container runtime","Mounts volumes","Creates a network namespace"], a:0, src:"Lec 4 - Slide 34"},
+  {q:"Kubernetes StatefulSet differs from Deployment because:", o:["Stable network ID and persistent storage","Stateless","Only for single node","Uses Docker Hub only"], a:0, src:"K8s Workloads"}
 ];
 
-/* ================= AUTOMATIC RANDOMIZER (SHUFFLE) ================= */
-questions.forEach((q, index) => {
-  if (index >= 39) {
-    const correctText = q.o[q.a];
-    for (let i = q.o.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [q.o[i], q.o[j]] = [q.o[j], q.o[i]];
-    }
-    q.a = q.o.indexOf(correctText);
-  }
-});
-
-/* ================= SOLVED WRITTEN QUESTIONS ================= */
-const writtenQuestions = [
-  { q: "Explain how namespaces provide isolation between containers.", a: "They partition kernel resources (like PIDs, networks, and mount points) so processes see only their own isolated view of the system." },
-  { q: "Explain why containers start faster than virtual machines.", a: "They share the host OS kernel and do not require booting a full Guest OS, avoiding the boot overhead." },
-  { q: "Describe how Cgroups protect the host system from resource exhaustion.", a: "They limit, account for, and isolate resource usage (CPU, memory, I/O) for groups of processes." },
-  { q: "Explain the copy-on-write mechanism used by container images.", a: "Data is read from shared layers; a file is only copied to the writable upper layer when it is modified." },
-  { q: "Describe the role of OverlayFS in Docker.", a: "It is a union filesystem that merges the container's writable layer with the read-only image layers into a single view." },
-  { q: "Explain why Pods are the smallest deployable unit in Kubernetes.", a: "K8s manages groups of containers (Pods) that share networking and storage, not individual containers." },
-  { q: "Describe how the Kubernetes control plane enforces desired state.", a: "It continuously compares the current cluster state with the desired state stored in etcd and triggers actions to reconcile them." },
-  { q: "Explain the role of kubelet on a worker node.", a: "It registers the node, receives Pod specs from the API server, and ensures containers are running and healthy." },
-  { q: "Describe the sidecar container pattern and its use cases.", a: "A secondary container in a Pod assisting the main app (e.g., log forwarding or proxying), sharing the same lifecycle." },
-  { q: "Explain how Pod-to-Pod networking works across nodes.", a: "A flat network (via CNI) assigns unique IPs to all Pods, allowing direct communication without NAT." },
-  { q: "Compare containers and VMs in terms of isolation and performance.", a: "VMs: Strong hardware isolation, slower. Containers: Weaker OS-level isolation, near-native performance." },
-  { q: "Explain when a VM is preferred over a container.", a: "When strict security isolation is needed or when running an application requiring a different OS kernel." },
-  { q: "Describe how kube-proxy enables Service networking.", a: "It runs on every node, maintaining network rules (iptables/IPVS) to forward traffic to backend Pods." },
-  { q: "Explain the difference between ClusterIP, NodePort, and LoadBalancer.", a: "ClusterIP: Internal only. NodePort: Exposes static port on nodes. LoadBalancer: Provisions cloud provider LB." },
-  { q: "Describe how HPA and VPA differ.", a: "HPA scales out (adds Pods). VPA scales up (increases CPU/Memory limits for existing Pods)." },
-  { q: "Explain the purpose of DaemonSets.", a: "Ensures a copy of a specific Pod runs on all (or selected) nodes (e.g., log collectors, monitoring agents)." },
-  { q: "Describe the role of etcd in Kubernetes.", a: "It is the consistent, distributed key-value store used as the 'brain' to hold all cluster configuration and state." },
-  { q: "Explain how Ingress works at Layer 7.", a: "It acts as a smart router, directing external HTTP/HTTPS traffic to Services based on hostnames or paths." },
-  { q: "Describe StatefulSets and when they are used.", a: "Manages stateful apps requiring stable network IDs, persistent storage, and ordered deployment (e.g., databases)." },
-  { q: "Explain the pause container’s role in a Pod.", a: "A hidden placeholder container that holds the network namespace open for the entire lifecycle of the Pod." }
+const written = [
+  {q:"Explain how namespaces isolate containers at the OS level.", a:"Namespaces partition kernel resources (Process IDs, Network stacks, Hostnames, etc.) so that processes in one container cannot see or interact with those in another container or the host.", src:"Lec 4 - Slide 23"},
+  {q:"Describe why containers start faster and use fewer resources than VMs.", a:"Containers share the host OS kernel and do not require a full Guest OS or hardware emulation. They are simply isolated processes on the host.", src:"Lec 4 - Slide 5, 8"},
+  {q:"Explain how Cgroups protect the host from resource exhaustion.", a:"Control Groups (Cgroups) limit and meter resource usage (CPU, Memory, I/O) for groups of processes, preventing a single container from starving the host or other containers.", src:"Lec 4 - Slide 19"},
+  {q:"Explain why Docker images use read-only layers and how copy-on-write works.", a:"Read-only layers allow multiple containers to share the same base files safely. If a container needs to modify a file, it copies it to its private 'upper' writable layer (Copy-on-Write).", src:"Lec 4 - Slide 29, 32"},
+  {q:"Describe the role of kubelet.", a:"The kubelet is an agent that runs on each node. It receives PodSpecs from the API server and ensures the containers described in those specs are running and healthy.", src:"Net PPT - Slide 5"},
+  {q:"Explain how the Kubernetes control plane enforces desired state.", a:"Controllers (in the Controller-manager) watch the cluster's current state (via the API server and etcd) and take corrective actions to bring it in line with the user-defined 'desired state'.", src:"Net PPT - Slide 5"},
+  {q:"Describe the sidecar design pattern.", a:"A sidecar is a helper container that runs alongside the main application container in the same Pod, sharing its lifecycle and network namespace to provide features like logging or proxying.", src:"Net PPT - Slide 136"}
 ];
 
-/* ================= RENDER MCQs ================= */
+/* ================= RENDERING ================= */
 let score = 0;
-document.getElementById("total").innerText = questions.length;
+document.getElementById("total").innerText = mcqs.length;
 
-const quizContainer = document.getElementById("quiz");
-
-questions.forEach((q, i) => {
+const quizDiv = document.getElementById("quiz-container");
+mcqs.forEach((m, i) => {
   const card = document.createElement("div");
   card.className = "question-card";
-  
-  const title = document.createElement("div");
-  title.className = "question-text";
-  title.innerHTML = `<span class="question-number">${i + 1}.</span> ${q.q}`;
-  card.appendChild(title);
-
-  const choicesGrid = document.createElement("div");
-  choicesGrid.className = "choices-grid";
-
-  q.o.forEach((opt, j) => {
+  card.innerHTML = `
+    <div class="question-text">${i+1}. ${m.q}</div>
+    <div class="source-tag">Source: ${m.src}</div>
+    <div class="choices-grid"></div>
+  `;
+  const grid = card.querySelector(".choices-grid");
+  m.o.forEach((opt, j) => {
     const btn = document.createElement("div");
-    btn.className = "choice";
-    btn.innerText = opt;
-
+    btn.className = "choice"; btn.innerText = opt;
     btn.onclick = () => {
-      if (card.dataset.done) return;
-      card.dataset.done = "true";
-
-      if (j === q.a) {
-        btn.classList.add("correct");
-        score++;
-      } else {
-        btn.classList.add("wrong");
-        choicesGrid.querySelectorAll(".choice")[q.a].classList.add("correct");
-      }
-
-      const scoreEl = document.getElementById("score");
-      scoreEl.innerText = score;
-      scoreEl.style.transform = "scale(1.5)";
-      setTimeout(() => scoreEl.style.transform = "scale(1)", 200);
-
-      const fb = document.createElement("div");
-      fb.className = "feedback-msg";
-      fb.innerHTML = `Correct Answer: <strong>${q.o[q.a]}</strong>`;
-      card.appendChild(fb);
+      if(card.dataset.done) return; card.dataset.done = "true";
+      if(j === m.a){ btn.classList.add("correct"); score++; }
+      else { btn.classList.add("wrong"); grid.children[m.a].classList.add("correct"); }
+      document.getElementById("score").innerText = score;
     };
-
-    choicesGrid.appendChild(btn);
+    grid.appendChild(btn);
   });
-
-  card.appendChild(choicesGrid);
-  quizContainer.appendChild(card);
+  quizDiv.appendChild(card);
 });
 
-/* ================= RENDER SOLVED WRITTEN QUESTIONS ================= */
-const writtenDiv = document.getElementById("written");
-
-writtenQuestions.forEach((item, i) => {
+const writtenDiv = document.getElementById("written-container");
+written.forEach((w, i) => {
   const card = document.createElement("div");
   card.className = "question-card";
-  
-  const title = document.createElement("div");
-  title.className = "question-text";
-  title.innerHTML = `<span class="question-number">W${i + 1}.</span> ${item.q}`;
-  
-  const answerBox = document.createElement("div");
-  answerBox.className = "answer-box";
-  answerBox.innerHTML = `<span class="answer-label">Answer</span>${item.a}`;
-  
-  card.appendChild(title);
-  card.appendChild(answerBox);
+  card.innerHTML = `
+    <div class="question-text">W${i+1}. ${w.q}</div>
+    <div class="source-tag">Source: ${w.src}</div>
+    <div class="answer-box"><strong>Key Points:</strong> ${w.a}</div>
+  `;
   writtenDiv.appendChild(card);
 });
-
 </script>
 
 </body>
